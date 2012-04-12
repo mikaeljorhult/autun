@@ -2,7 +2,7 @@
  * autun
  * minimalistic attribute manipulation.
  * 
- * @version 0.1
+ * @version 0.1.1
  * @author Mikael Jorhult
  * @license http://mikaeljorhult.mit-license.org MIT
  *
@@ -13,8 +13,7 @@ autun = {
 		if(object) { object = this.objectArray(object); };
 		
 		for(var i = 0; i < object.length; i++) {
-			var value = this.attr('class', undefined, object[i]);
-			this.attr('class', value + ' ' + name, object[i]);
+			object[i].className += ' ' + name;
 		}
 		
 		return object;
@@ -48,9 +47,7 @@ autun = {
 		if(object) { object = this.objectArray(object); };
 		
 		for(var i = 0; i < object.length; i++) {
-			var value = this.attr('class', undefined, object[i])
-				.replace(new RegExp('(\\s|^)' + name + '(\\s|$)', 'i'), '');
-			this.attr('class', value, object[i]);
+			object[i].className = object[i].className.replace(new RegExp('(\\s|^)' + name + '(\\s|$)', 'i'), '');
 		}
 		
 		return object;
