@@ -10,7 +10,6 @@
  */
 autun = {
 	class_list: null,
-	regexp_class: null,
 	
 	addClass: function(name, object) {
 		if(object) { object = this.objectArray(object); };
@@ -59,11 +58,13 @@ autun = {
 	removeClass: function(name, object) {
 		if(object) { object = this.objectArray(object); };
 		
+		var regexp_class = new RegExp('(\\s|^)' + name + '(\\s|$)', 'i');
+		
 		for(var i = 0, length = object.length; i < length; i++) {
 			if(this.class_list) {
 				object[i].classList.remove(name);
 			} else {
-				object[i].className = object[i].className.replace(this.reqExpClass, '');
+				object[i].className = object[i].className.replace(regexp_class, '');
 			}
 		}
 		
@@ -93,9 +94,6 @@ autun = {
 	init: function() {
 		// Feature detection
 		this.class_list = (!!document.documentElement.classList ? true : false);
-		
-		// Regular expressions
-		this.regexp_class = new RegExp('(\\s|^)' + name + '(\\s|$)', 'i')
 		
 		// Return object
 		return this;
