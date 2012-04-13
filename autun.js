@@ -2,7 +2,7 @@
  * autun
  * minimalistic attribute manipulation.
  * 
- * @version 0.1.1
+ * @version 0.1.2
  * @author Mikael Jorhult
  * @license http://mikaeljorhult.mit-license.org MIT
  *
@@ -66,9 +66,11 @@ autun = {
 	},
 	
 	objectArray: function(object) {
+		console.log(object.constructor.toString());
+		
 		if(object.constructor.toString().indexOf('Array') > -1) {
 			return object;
-		} else if(object.constructor.toString().indexOf('HTMLCollection') > -1) {
+		} else if(object.constructor.toString().match(/NodeList|HTMLCollection/)) {
 			return Array.prototype.slice.call(object);
 		} else {
 			return new Array(object);
