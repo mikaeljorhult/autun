@@ -2,14 +2,14 @@
  * autun
  * minimalistic attribute manipulation.
  * 
- * @version 0.1.2
+ * @version 0.1.3
  * @author Mikael Jorhult
  * @license http://mikaeljorhult.mit-license.org MIT
  *
  * Project repository: https://github.com/mikaeljorhult/autun
  */
 autun = {
-	class_list: ('classList' in document.documentElement ? true : false),
+	class_list: null,
 	
 	addClass: function(name, object) {
 		if(object) { object = this.objectArray(object); };
@@ -87,9 +87,12 @@ autun = {
 		return text = object[0].innerText || object[0].textContent;
 	},
 	
+	init: function() {
+		this.class_list = (!!document.documentElement.classList ? true : false);
+		return this;
+	},
+	
 	objectArray: function(object) {
-		console.log(object.constructor.toString());
-		
 		if(object.constructor.toString().indexOf('Array') > -1) {
 			return object;
 		} else if(object.constructor.toString().match(/NodeList|HTMLCollection/)) {
@@ -98,4 +101,4 @@ autun = {
 			return new Array(object);
 		}
 	}
-};
+}.init();
