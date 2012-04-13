@@ -9,11 +9,17 @@
  * Project repository: https://github.com/mikaeljorhult/autun
  */
 autun = {
+	class_list: ('classList' in document.documentElement ? true : false),
+	
 	addClass: function(name, object) {
 		if(object) { object = this.objectArray(object); };
 		
-		for(var i = 0; i < object.length; i++) {
-			object[i].className += ' ' + name;
+		for(var i = 0, length = object.length; i < length; i++) {
+			if(this.class_list) {
+				object[i].classList.add(name);
+			} else {
+				object[i].className += ' ' + name;
+			}
 		}
 		
 		return object;
@@ -34,7 +40,11 @@ autun = {
 	hasClass: function(name, object) {
 		if(object) { object = this.objectArray(object); }
 		
-		return (this.attr('class', undefined, object).split(' ').indexOf(name) > -1 ? true : false);
+		if(this.class_list) {
+			return object[0].classList.contains(name);
+		} else {
+			return (this.attr('class', undefined, object).split(' ').indexOf(name) > -1 ? true : false);
+		}
 	},
 	
 	html: function(object) {
@@ -46,8 +56,12 @@ autun = {
 	removeClass: function(name, object) {
 		if(object) { object = this.objectArray(object); };
 		
-		for(var i = 0; i < object.length; i++) {
-			object[i].className = object[i].className.replace(new RegExp('(\\s|^)' + name + '(\\s|$)', 'i'), '');
+		for(var i = 0, length = object.length; i < length; i++) {
+			if(this.class_list) {
+				object[i].classList.remove(name);
+			} else {
+				object[i].className = object[i].className.replace(new RegExp('(\\s|^)' + name + '(\\s|$)', 'i'), '');
+			}
 		}
 		
 		return object;
@@ -56,7 +70,15 @@ autun = {
 	toggleClass: function(name, object) {
 		if(object) { object = this.objectArray(object); };
 		
-		return (this.hasClass(name, object) ? this.removeClass(name, object) : this.addClass(name, object));
+		if(this.class_list) {
+			for(var i = 0, length = object.length; i < length; i++) {
+				object[i].classList.toggle(name);
+			}
+		} else {
+			return (this.hasClass(name, object) ? this.removeClass(name, object) : this.addClass(name, object));
+		}
+		
+		return object;
 	},
 	
 	val: function(object) {
