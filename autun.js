@@ -44,7 +44,7 @@ autun = {
 	},
 	
 	html: function(object) {
-		return text = object[0].innerHTML;
+		return object[0].innerHTML;
 	},
 	
 	removeClass: function(name, object) {
@@ -74,7 +74,7 @@ autun = {
 	},
 	
 	val: function(object) {
-		return text = object[0].innerText || object[0].textContent;
+		return object[0].innerText || object[0].textContent;
 	},
 	
 	init: function() {
